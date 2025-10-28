@@ -18,4 +18,4 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scene: [PreloadScene, MainMenuScene, GameStartScene, HandScene],
 };
 
-var game = new Phaser.Game(gameConfig);
+new Phaser.Game(gameConfig);

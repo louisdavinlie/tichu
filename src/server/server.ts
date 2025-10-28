@@ -31,13 +31,13 @@ server.listen(8081, () => {
   console.log("Listening on 8081");
 });
 
-app.post("/new_game", async (req, res) => {
+app.post("/new_game", async (_req, _res) => {
   let game = new Game();
   await game.save();
 });
 
-app.get("/games", async (req, res) => {
-  const { data, error } = await supabase
+app.get("/games", async (_req, res) => {
+  const { data } = await supabase
     .from("games")
     .select("*")
     .eq("gameState", "IN_PROGRESS");
@@ -113,7 +113,7 @@ app.get("/hand/:handId", async (req, res) => {
 });
 
 async function getGame(gameId: string): Promise<Game | void> {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("games")
     .select("*")
     .eq("gameId", gameId);
@@ -139,7 +139,7 @@ async function getGame(gameId: string): Promise<Game | void> {
 }
 
 async function getHand(handId: string): Promise<Hand | void> {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("hands")
     .select("*")
     .eq("handId", handId);

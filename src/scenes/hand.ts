@@ -19,7 +19,7 @@ export class HandScene extends Phaser.Scene {
     let handId = this.registry.get("handId");
     this.#fetchHand(handId);
 
-    this.socket?.on("playerWin", (receivedHandId, receivedPlayerNumber) => {
+    this.socket?.on("playerWin", (receivedHandId, _receivedPlayerNumber) => {
       if (handId == receivedHandId) {
         this.scene;
         this.scene.start(SCENE_KEYS.GAME);
@@ -104,7 +104,7 @@ export class HandScene extends Phaser.Scene {
           receivedHandId,
           receivedPlayerNumber,
           receivedSelectedCards,
-          receivedCardHistory
+          _receivedCardHistory
         ) => {
           if (
             receivedHandId == handId &&
@@ -210,7 +210,7 @@ export class HandScene extends Phaser.Scene {
 
     this.socket?.on(
       "handAction",
-      (receivedHandId, receivedPlayerNumber, c, d, receivedBanker) => {
+      (receivedHandId, receivedPlayerNumber, _c, _d, receivedBanker) => {
         if (receivedHandId == hand.handId) {
           turnText.setVisible(playerNumber == receivedPlayerNumber);
           if (playerNumber == receivedBanker) {
@@ -241,7 +241,7 @@ export class HandScene extends Phaser.Scene {
 
     this.socket?.on(
       "handAction",
-      (receivedHandId, b, receivedHandState, receivedRunningPoints, e) => {
+      (receivedHandId, _b, receivedHandState, receivedRunningPoints, _e) => {
         if (this.registry.get("handId") == receivedHandId) {
           pointText.setText(`points: ${receivedRunningPoints}`);
           handStateText.setText(
@@ -357,7 +357,7 @@ export class HandScene extends Phaser.Scene {
 
     this.socket?.on(
       "handAction",
-      (receivedHandId, receivedPlayerNumber, receivedHandState, d, e) => {
+      (receivedHandId, receivedPlayerNumber, receivedHandState, _d, _e) => {
         if (receivedHandId == handId) {
           //   undoContainer.setVisible(receivedPlayerNumber == playerNumber);
           passContainer.setVisible(receivedPlayerNumber == playerNumber);
@@ -389,7 +389,7 @@ export class HandScene extends Phaser.Scene {
 
     this.socket?.on(
       "cardsPlayed",
-      (receivedHandId, b, c, receivedCardHistory) => {
+      (receivedHandId, _b, _c, receivedCardHistory) => {
         if (receivedHandId == this.registry.get("handId")) {
           for (let i = 0; i < cardImages.length; i++) {
             cardImages[i].destroy();
@@ -420,12 +420,5 @@ export class HandScene extends Phaser.Scene {
         }
       }
     );
-  }
-
-  #destroy() {
-    this.socket?.removeAllListeners("playerWin");
-    this.socket?.removeAllListeners("cardsPlayed");
-    this.socket?.removeAllListeners("displayBankCardsToBanker");
-    this.socket?.removeAllListeners("handAction");
   }
 }

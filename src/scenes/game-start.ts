@@ -160,7 +160,7 @@ export class GameStartScene extends Phaser.Scene {
 
     this.socket?.on(
       "playerJoinGame",
-      (receivedGameId, receivedPlayer, receivedPlayerName) => {
+      (_receivedGameId, _receivedPlayer, _receivedPlayerName) => {
         playersCount += 1;
         if (playersCount == 3) {
           startHandButtonBox.setFillStyle(0x000000, 0);
@@ -174,7 +174,7 @@ export class GameStartScene extends Phaser.Scene {
       }
     );
 
-    this.socket?.on("playerLeftGame", (receivedGameId, receivedPlayer) => {
+    this.socket?.on("playerLeftGame", (_receivedGameId, _receivedPlayer) => {
       playersCount -= 1;
       if (3 > playersCount) {
         startHandButtonBox.setFillStyle(0x000000, 0.1);
@@ -202,7 +202,7 @@ export class GameStartScene extends Phaser.Scene {
     name: string,
     points: number
   ) {
-    const playerText = this.add.bitmapText(
+    this.add.bitmapText(
       x,
       y,
       FONT_KEYS.MONO,
@@ -218,7 +218,7 @@ export class GameStartScene extends Phaser.Scene {
       }`,
       17
     );
-    const playerPointsText = this.add.bitmapText(
+    this.add.bitmapText(
       x,
       y + 40,
       FONT_KEYS.MONO,
@@ -228,14 +228,14 @@ export class GameStartScene extends Phaser.Scene {
 
     this.socket?.on(
       "playerJoinGame",
-      (receivedGameId, receivedPlayer, receivedPlayerName) => {
+      (_receivedGameId, receivedPlayer, receivedPlayerName) => {
         if (receivedPlayer == playerNumber) {
           playerNameText.setText(receivedPlayerName);
         }
       }
     );
 
-    this.socket?.on("playerLeftGame", (receivedGameId, receivedPlayer) => {
+    this.socket?.on("playerLeftGame", (_receivedGameId, receivedPlayer) => {
       if (receivedPlayer == playerNumber) {
         playerNameText.setText("");
       }
@@ -263,22 +263,17 @@ export class GameStartScene extends Phaser.Scene {
 
     this.socket?.on(
       "playerJoinGame",
-      (receivedGameId, receivedPlayer, receivedPlayerName) => {
+      (_receivedGameId, _receivedPlayer, _receivedPlayerName) => {
         count += 1;
         countText.setText(`${count}/3 player(s) are in the game`);
       }
     );
 
-    this.socket?.on("playerLeftGame", (receivedGameId, receivedPlayer) => {
+    this.socket?.on("playerLeftGame", (_receivedGameId, _receivedPlayer) => {
       count -= 1;
       countText.setText(`${count}/3 player(s) are in the game`);
     });
 
     return count;
-  }
-
-  #destroy() {
-    this.socket?.removeAllListeners("playerJoinGame");
-    this.socket?.removeAllListeners("playerLeftGame");
   }
 }

@@ -1,5 +1,5 @@
 import * as Phaser from "phaser";
-import { ASSET_KEYS, FONT_KEYS, SCENE_KEYS, STATE } from "../utils/common";
+import { FONT_KEYS, SCENE_KEYS, STATE } from "../utils/common";
 import io, { Socket } from "socket.io-client";
 
 export class MainMenuScene extends Phaser.Scene {
@@ -10,8 +10,8 @@ export class MainMenuScene extends Phaser.Scene {
 
   public create(): void {
     let playerName = this.registry.get("playerName");
-    const tichuText = this.add.bitmapText(14, 10, FONT_KEYS.MONO, "TICHU", 20);
-    const nameText = this.add.bitmapText(
+    this.add.bitmapText(14, 10, FONT_KEYS.MONO, "TICHU", 20);
+    this.add.bitmapText(
       14,
       50,
       FONT_KEYS.MONO,
@@ -263,7 +263,7 @@ export class MainMenuScene extends Phaser.Scene {
           .rectangle(0, 0, 640, 80)
           .setOrigin(0)
           .setStrokeStyle(2, 0x000000, 0.5);
-        const gameContainer = this.add
+        this.add
           .container(20, 100)
           .add([
             gameBox,
@@ -278,10 +278,5 @@ export class MainMenuScene extends Phaser.Scene {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }
-
-  #destroy() {
-    this.socket?.removeAllListeners("playerJoinGame");
-    this.socket?.removeAllListeners("playerLeftGame");
   }
 }
