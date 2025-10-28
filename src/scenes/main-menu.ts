@@ -47,6 +47,8 @@ export class MainMenuScene extends Phaser.Scene {
       newGameButtonBox.setFillStyle(0x000000, 0);
     });
 
+    newGameButtonContainer.setVisible(false);
+
     this.#fetchGames();
 
     this.socket = io("http://localhost:8081");
