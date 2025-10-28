@@ -10,7 +10,6 @@ import { Card } from "../lib/card.ts";
 import { Deck } from "../lib/deck.ts";
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Allow requests only from this origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
   credentials: true, // Allow sending cookies and authorization headers
 };
@@ -19,7 +18,6 @@ var app = express();
 var server = createServer(app);
 var io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Replace with your client's origin
     methods: ["GET", "POST"],
   },
 });
