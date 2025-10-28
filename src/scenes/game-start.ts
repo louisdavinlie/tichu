@@ -10,11 +10,11 @@ export class GameStartScene extends Phaser.Scene {
   public create(): void {
     let gameId = this.registry.get("gameId");
     this.#fetchGame(gameId);
-    this.socket = io("http://localhost:8081");
+    this.socket = io("http://3.25.63.217:8081");
   }
 
   async #fetchGame(gameId: string) {
-    const apiUrl = `http://localhost:8081/game/${gameId}`;
+    const apiUrl = `http://3.25.63.217:8081/game/${gameId}`;
 
     try {
       const response = await fetch(apiUrl);
@@ -31,7 +31,7 @@ export class GameStartScene extends Phaser.Scene {
       if (game.gameHands.length > 0) {
         const lastHandId = game.gameHands.at(-1);
         const handResp = await fetch(
-          `http://localhost:8081/hand/${lastHandId}`
+          `http://3.25.63.217:8081/hand/${lastHandId}`
         );
 
         if (!handResp.ok) {
@@ -142,7 +142,7 @@ export class GameStartScene extends Phaser.Scene {
     startHandButtonContainer.on("pointerdown", async () => {
       if (allPlayersReady) {
         console.log("IM CLICKED");
-        await fetch(`http://localhost:8081/game/${gameId}/start_hand`, {
+        await fetch(`http://3.25.63.217:8081/game/${gameId}/start_hand`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -202,13 +202,7 @@ export class GameStartScene extends Phaser.Scene {
     name: string,
     points: number
   ) {
-    this.add.bitmapText(
-      x,
-      y,
-      FONT_KEYS.MONO,
-      `player ${playerNumber}:`,
-      17
-    );
+    this.add.bitmapText(x, y, FONT_KEYS.MONO, `player ${playerNumber}:`, 17);
     const playerNameText = this.add.bitmapText(
       x,
       y + 20,
@@ -218,13 +212,7 @@ export class GameStartScene extends Phaser.Scene {
       }`,
       17
     );
-    this.add.bitmapText(
-      x,
-      y + 40,
-      FONT_KEYS.MONO,
-      `${points} points`,
-      17
-    );
+    this.add.bitmapText(x, y + 40, FONT_KEYS.MONO, `${points} points`, 17);
 
     this.socket?.on(
       "playerJoinGame",

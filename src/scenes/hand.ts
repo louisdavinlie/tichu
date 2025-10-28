@@ -15,7 +15,7 @@ export class HandScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.socket = io("http://localhost:8081");
+    this.socket = io("http://3.25.63.217:8081");
     let handId = this.registry.get("handId");
     this.#fetchHand(handId);
 
@@ -28,7 +28,7 @@ export class HandScene extends Phaser.Scene {
   }
 
   async #fetchHand(handId: string) {
-    const apiUrl = `http://localhost:8081/hand/${handId}`;
+    const apiUrl = `http://3.25.63.217:8081/hand/${handId}`;
 
     try {
       const response = await fetch(apiUrl);

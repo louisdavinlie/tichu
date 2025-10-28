@@ -11,13 +11,7 @@ export class MainMenuScene extends Phaser.Scene {
   public create(): void {
     let playerName = this.registry.get("playerName");
     this.add.bitmapText(14, 10, FONT_KEYS.MONO, "TICHU", 20);
-    this.add.bitmapText(
-      14,
-      50,
-      FONT_KEYS.MONO,
-      `you are ${playerName}`,
-      17
-    );
+    this.add.bitmapText(14, 50, FONT_KEYS.MONO, `you are ${playerName}`, 17);
 
     const newGameButtonText = this.add.bitmapText(
       14,
@@ -51,7 +45,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     this.#fetchGames();
 
-    this.socket = io("http://localhost:8081");
+    this.socket = io("http://3.25.63.217:8081");
   }
 
   #createPlayerBox(
@@ -111,7 +105,7 @@ export class MainMenuScene extends Phaser.Scene {
           playerName: this.registry.get("playerName"),
           playerNumber: player,
         };
-        await fetch(`http://localhost:8081/game/${gameId}`, {
+        await fetch(`http://3.25.63.217:8081/game/${gameId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -134,7 +128,7 @@ export class MainMenuScene extends Phaser.Scene {
             if (game.gameHands.length > 0) {
               lastHandId = game.gameHands.at(-1);
               const handResp = await fetch(
-                `http://localhost:8081/hand/${lastHandId}`
+                `http://3.25.63.217:8081/hand/${lastHandId}`
               );
 
               if (!handResp.ok) {
@@ -199,7 +193,7 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   async #fetchGames() {
-    const apiUrl = "http://localhost:8081/games";
+    const apiUrl = "http://3.25.63.217:8081/games";
 
     try {
       const response = await fetch(apiUrl);
