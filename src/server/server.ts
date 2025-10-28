@@ -10,6 +10,7 @@ import { Card } from "../lib/card.ts";
 import { Deck } from "../lib/deck.ts";
 
 const corsOptions = {
+  origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
   credentials: true, // Allow sending cookies and authorization headers
 };
@@ -18,6 +19,7 @@ var app = express();
 var server = createServer(app);
 var io = new Server(server, {
   cors: {
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -240,7 +242,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("startHand", (gameId, handId) => {
-    console.log("START HAND")
+    console.log("START HAND");
     socket.broadcast.emit("startHand", gameId, handId, socket.id);
   });
 
